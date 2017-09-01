@@ -1,0 +1,8 @@
+prefix=/home/shubham/catkin_ws/src/testrobot/testrobot_world_plugins/testrobot_world_plugins/build/devel
+
+Name: testrobot_world_plugins
+Description: Description of testrobot_world_plugins
+Version: 0.0.0
+Cflags: -I/home/shubham/catkin_ws/src/testrobot/testrobot_world_plugins/testrobot_world_plugins/include -I/usr/include/OGRE -I/usr/include -I/usr/include/gazebo-7 -I/usr/include/sdformat-4.3 -I/usr/include/ignition/math2 -I/usr/include/OGRE/Terrain -I/usr/include/OGRE/Paging
+Libs: -L/home/shubham/catkin_ws/src/testrobot/testrobot_world_plugins/testrobot_world_plugins/build/devel/lib -lUnderwaterWorldPlugin
+Requires: gazebo_msgs
