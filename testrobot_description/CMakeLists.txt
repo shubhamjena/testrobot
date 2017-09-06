@@ -9,8 +9,8 @@ find_package(catkin REQUIRED)
 find_package(gazebo REQUIRED) # this is only required to get gazebo's directories
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES uuv_descriptions
+  
+  LIBRARIES testrobot_descriptions
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )

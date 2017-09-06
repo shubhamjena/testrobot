@@ -70,7 +70,7 @@
       <pose>0 0 0 0 0 0</pose>
     </include>
 
-    <plugin name="UnderWaterWorldROSPlugin" filename="UnderWaterWorldROSPlugin.so">
+    <plugin name="UnderwaterWorldROSPlugin" filename="libUnderwaterWorldROSPlugin.so">
       <namespace>hydrodynamics</namespace>
       <constant_current>
         <topic>current_velocity</topic>
@@ -99,6 +99,11 @@
         </vertical_angle>
       </constant_current>
     </plugin>
+
+   <include>
+      <uri>model://kraken_model</uri>
+      <pose>0 0 0 0 0 0</pose>
+  </include>
 
   </world>
 </sdf>

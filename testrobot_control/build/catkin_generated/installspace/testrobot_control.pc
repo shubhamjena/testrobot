@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: testrobot_control
+Description: Description of testrobot_control
+Version: 0.0.0
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -lthrusterPlugin
+Requires: 

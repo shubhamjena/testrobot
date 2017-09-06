@@ -486,7 +486,195 @@
       </axis>
     </joint>
 
-     <plugin name="thrusterPlugin" filename="libthrusterPlugin.so"/>
+     <!--plugin name="thrusterPlugin" filename="libthrusterPlugin.so"/-->
+  
+    <!--underwater object ros plugin-->
+    <plugin name = "UnderwaterObjectROSPlugin" filename = "libUnderwaterObjectROSPlugin.so">
+     <fluid_density>1000</fluid_density>
+     <flow_velocity_topic>hydrodynamics/current_velocity</flow_velocity_topic>
+     <debug>true</debug>
+        
+    <!-- hydrodynamic and hydrostatic parameters for vehicle-->
+    <link name = "base_link">
+     <volume> 1</volume>
+     <neutrally_buoyant>0</neutrally_buoyant>
+     <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+     </box>
+     <center_of_buoyancy> 0 0 0</center_of_buoyancy>
+     <hydrodynamic_model>
+      <type>fossen</type>
+      <added_mass>
+                     779.79 -6.8773 -103.32  8.5426 -165.54 -7.8033
+                    -6.8773    1222   51.29  409.44 -5.8488  62.726
+                    -103.32   51.29  3659.9  6.1112 -386.42  10.774
+                     8.5426  409.44  6.1112   534.9 -10.027  21.019
+                    -165.54 -5.8488 -386.42 -10.027  842.69 -1.1162
+                    -7.8033  62.726  10.775  21.019 -1.1162  224.32
+
+     </added_mass>
+     <linear_damping>
+     -74.82 -69.48 -728.4 -268.8 -309.77 -105
+     </linear_damping>
+     <!--linear_damping_forward_speed> </linear_damping_forward_speed-->
+     <quadratic_damping>
+     -748.22 -992.53 -1821.01 -672 -774.44 -523.27
+     </quadratic_damping>
+    </hydrodynamic_model>
+   </link>
  
+   <link name = "thruster_surge_left">
+    <volume>1</volume>
+    <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy>0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+   </hydrodynamic_model>
+  </link>
+            
+ <link name = "thruster_surge_right">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "thruster_sway_front">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "thruster_sway_back">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "thruster_depth_back">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "thruster_depth_front">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "front_camera">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+ <link name = "bottom_camera">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+
+ <link name = "DVL">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+ <link name = "IMU">
+  <volume>1</volume>
+  <neutrally_buoyant>0</neutrally_buoyant>
+    <box>
+      <width>1</width>
+      <length>1</length>
+      <height>1</height>
+   </box>
+   <center_of_buoyancy> 0 0 0</center_of_buoyancy>               
+   <hydrodynamic_model>
+    <type>fossen</type>
+    </hydrodynamic_model>
+ </link>
+
+ 
+ 
+   <!-- hydrodynamic parameters set*********************-->
+  </plugin>
+
   </model>
 </sdf>

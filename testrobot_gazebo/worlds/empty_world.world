@@ -10,6 +10,8 @@
       <uri>model://ground_plane</uri>
     </include>
    
+
+<!-- spawning auv(COMMENT THIS OUT AND SPAWN WORLD AND AUV FROM LAUNCH FILE-->
    <include>
       <uri>/home/shubham/catkin_ws/src/testrobot/testrobot_description/kraken_model</uri>
    </include>

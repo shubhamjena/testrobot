@@ -14,7 +14,7 @@
         <arg name="verbose" value="true"/>
     </include>
 
-    <node name="publish_world_models"
+    <!--node name="publish_world_models"
         pkg="testrobot_assistants"
         type="publish_world_models.py"
         output="screen">
@@ -30,5 +30,13 @@
         <include file="$(find testrobot_assistants)/launch/set_simulation_timer.launch">
             <arg name="timeout" value="$(arg timeout)"/>
         </include>
-    </group>
+    </group-->
+
+
+<!-- spawning Kraken-->
+<node name="spawn_sdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find testrobot_description)/kraken_model/model.sdf -gazebo -model kraken_model"/>
+
+
+<!--starting thruster_manager node-->
+
 </launch>

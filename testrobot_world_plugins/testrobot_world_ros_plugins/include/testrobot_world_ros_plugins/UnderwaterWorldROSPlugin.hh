@@ -1,21 +1,3 @@
-// Copyright (c) 2016 The UUV Simulator Authors.
-// All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-/// \file UnderwaterWorldROSPlugin.hh
-/// \brief Publishes the constant flow velocity in ROS messages and creates a
-/// service to alter the flow model in runtime
 
 #ifndef __CONSTANT_FLOW_ROS_PLUGIN_HH__
 #define __CONSTANT_FLOW_ROS_PLUGIN_HH__
@@ -31,14 +13,14 @@
 #include <gazebo/physics/World.hh>
 #include <ros/ros.h>
 #include <geometry_msgs/TwistStamped.h>
-#include <testrobot_world_ros_plugins_msgs/SetCurrentModel.h>
-#include <testrobot_world_ros_plugins_msgs/GetCurrentModel.h>
-#include <testrobot_world_ros_plugins_msgs/SetCurrentVelocity.h>
-#include <testrobot_world_ros_plugins_msgs/SetCurrentDirection.h>
-#include <testrobot_world_ros_plugins_msgs/SetOriginSphericalCoord.h>
-#include <testrobot_world_ros_plugins_msgs/GetOriginSphericalCoord.h>
+#include <testrobot_msg_stack/SetCurrentModel.h>
+#include <testrobot_msg_stack/GetCurrentModel.h>
+#include <testrobot_msg_stack/SetCurrentVelocity.h>
+#include <testrobot_msg_stack/SetCurrentDirection.h>
+#include <testrobot_msg_stack/SetOriginSphericalCoord.h>
+#include <testrobot_msg_stack/GetOriginSphericalCoord.h>
 
-namespace uuv_simulator_ros
+namespace testrobot_simulator_ros
 {
   class UnderwaterWorldROSPlugin : public gazebo::UnderwaterWorldPlugin
   {
@@ -55,63 +37,63 @@ namespace uuv_simulator_ros
     /// \brief Service call to update the parameters for the velocity
     /// Gauss-Markov process model
     public: bool UpdateCurrentVelocityModel(
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res);
+        testrobot_msg_stack::SetCurrentModel::Request& _req,
+        testrobot_msg_stack::SetCurrentModel::Response& _res);
 
     /// \brief Service call to update the parameters for the horizontal angle
     /// Gauss-Markov process model
     public: bool UpdateCurrentHorzAngleModel(
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res);
+        testrobot_msg_stack::SetCurrentModel::Request& _req,
+        testrobot_msg_stack::SetCurrentModel::Response& _res);
 
     /// \brief Service call to update the parameters for the vertical angle
     /// Gauss-Markov process model
     public: bool UpdateCurrentVertAngleModel(
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res);
+        testrobot_msg_stack::SetCurrentModel::Request& _req,
+        testrobot_msg_stack::SetCurrentModel::Response& _res);
 
     /// \brief Service call to read the parameters for the velocity
     /// Gauss-Markov process model
     public: bool GetCurrentVelocityModel(
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res);
+        testrobot_msg_stack::GetCurrentModel::Request& _req,
+        testrobot_msg_stack::GetCurrentModel::Response& _res);
 
     /// \brief Service call to read the parameters for the horizontal angle
     /// Gauss-Markov process model
     public: bool GetCurrentHorzAngleModel(
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res);
+        testrobot_msg_stack::GetCurrentModel::Request& _req,
+        testrobot_msg_stack::GetCurrentModel::Response& _res);
 
     /// \brief Service call to read the parameters for the vertical angle
     /// Gauss-Markov process model
     public: bool GetCurrentVertAngleModel(
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-        testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res);
+        testrobot_msg_stack::GetCurrentModel::Request& _req,
+        testrobot_msg_stack::GetCurrentModel::Response& _res);
 
     /// \brief Service call to update the mean value of the flow velocity
     public: bool UpdateCurrentVelocity(
-        testrobot_world_ros_plugins_msgs::SetCurrentVelocity::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentVelocity::Response& _res);
+        testrobot_msg_stack::SetCurrentVelocity::Request& _req,
+        testrobot_msg_stack::SetCurrentVelocity::Response& _res);
 
     /// \brief Service call to update the mean value of the horizontal angle
     public: bool UpdateHorzAngle(
-        testrobot_world_ros_plugins_msgs::SetCurrentDirection::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentDirection::Response& _res);
+        testrobot_msg_stack::SetCurrentDirection::Request& _req,
+        testrobot_msg_stack::SetCurrentDirection::Response& _res);
 
     /// \brief Service call to update the mean value of the vertical angle
     public: bool UpdateVertAngle(
-        testrobot_world_ros_plugins_msgs::SetCurrentDirection::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetCurrentDirection::Response& _res);
+        testrobot_msg_stack::SetCurrentDirection::Request& _req,
+        testrobot_msg_stack::SetCurrentDirection::Response& _res);
 
     /// \brief Service call that returns the origin in WGS84 standard
     public: bool GetOriginSphericalCoord(
-        testrobot_world_ros_plugins_msgs::GetOriginSphericalCoord::Request& _req,
-        testrobot_world_ros_plugins_msgs::GetOriginSphericalCoord::Response& _res);
+        testrobot_msg_stack::GetOriginSphericalCoord::Request& _req,
+        testrobot_msg_stack::GetOriginSphericalCoord::Response& _res);
 
     /// \brief Service call that returns the origin in WGS84 standard
     public: bool SetOriginSphericalCoord(
-        testrobot_world_ros_plugins_msgs::SetOriginSphericalCoord::Request& _req,
-        testrobot_world_ros_plugins_msgs::SetOriginSphericalCoord::Response& _res);
+        testrobot_msg_stack::SetOriginSphericalCoord::Request& _req,
+        testrobot_msg_stack::SetOriginSphericalCoord::Response& _res);
 
     /// \brief Publishes ROS topics
     private: void PublishROSTopics();

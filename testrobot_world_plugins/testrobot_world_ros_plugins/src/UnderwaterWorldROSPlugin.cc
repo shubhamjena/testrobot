@@ -1,24 +1,10 @@
-// Copyright (c) 2016 The UUV Simulator Authors.
-// All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 #include <testrobot_world_ros_plugins/UnderwaterWorldROSPlugin.hh>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/World.hh>
 
-namespace uuv_simulator_ros
+namespace testrobot_simulator_ros
 {
 /////////////////////////////////////////////////
 UnderwaterWorldROSPlugin::UnderwaterWorldROSPlugin()
@@ -52,10 +38,18 @@ void UnderwaterWorldROSPlugin::Load(gazebo::physics::WorldPtr _world,
 
   if (!ros::isInitialized())
   {
-    gzerr << "Not loading plugin since ROS has not been "
+   /* gzerr << "Not loading plugin since ROS has not been "
           << "properly initialized.  Try starting gazebo with ros plugin:\n"
           << "  gazebo -s libgazebo_ros_api_plugin.so\n";
-    return;
+    return;*/
+
+          {
+	    int argc = 0;
+	    char **argv = NULL;
+	    ros::init(argc, argv, "world_node",ros::init_options::NoSigintHandler);
+            
+	   }
+
   }
 
   this->rosNode.reset(new ros::NodeHandle(""));
@@ -154,8 +148,8 @@ void UnderwaterWorldROSPlugin::PublishROSTopics()
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateHorzAngle(
-    testrobot_world_ros_plugins_msgs::SetCurrentDirection::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentDirection::Response& _res)
+    testrobot_msg_stack::SetCurrentDirection::Request& _req,
+    testrobot_msg_stack::SetCurrentDirection::Response& _res)
 {
   _res.success = this->currentHorzAngleModel.SetMean(_req.angle);
 
@@ -164,8 +158,8 @@ bool UnderwaterWorldROSPlugin::UpdateHorzAngle(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateVertAngle(
-    testrobot_world_ros_plugins_msgs::SetCurrentDirection::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentDirection::Response& _res)
+    testrobot_msg_stack::SetCurrentDirection::Request& _req,
+    testrobot_msg_stack::SetCurrentDirection::Response& _res)
 {
   _res.success = this->currentVertAngleModel.SetMean(_req.angle);
   return true;
@@ -173,8 +167,8 @@ bool UnderwaterWorldROSPlugin::UpdateVertAngle(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateCurrentVelocity(
-    testrobot_world_ros_plugins_msgs::SetCurrentVelocity::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentVelocity::Response& _res)
+    testrobot_msg_stack::SetCurrentVelocity::Request& _req,
+    testrobot_msg_stack::SetCurrentVelocity::Response& _res)
 {
   if (this->currentVelModel.SetMean(_req.velocity) &&
       this->currentHorzAngleModel.SetMean(_req.horizontal_angle) &&
@@ -199,8 +193,8 @@ bool UnderwaterWorldROSPlugin::UpdateCurrentVelocity(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::GetCurrentVelocityModel(
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res)
+    testrobot_msg_stack::GetCurrentModel::Request& _req,
+    testrobot_msg_stack::GetCurrentModel::Response& _res)
 {
   _res.mean = this->currentVelModel.mean;
   _res.min = this->currentVelModel.min;
@@ -212,8 +206,8 @@ bool UnderwaterWorldROSPlugin::GetCurrentVelocityModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::GetCurrentHorzAngleModel(
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res)
+    testrobot_msg_stack::GetCurrentModel::Request& _req,
+    testrobot_msg_stack::GetCurrentModel::Response& _res)
 {
   _res.mean = this->currentHorzAngleModel.mean;
   _res.min = this->currentHorzAngleModel.min;
@@ -225,8 +219,8 @@ bool UnderwaterWorldROSPlugin::GetCurrentHorzAngleModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::GetCurrentVertAngleModel(
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::GetCurrentModel::Response& _res)
+    testrobot_msg_stack::GetCurrentModel::Request& _req,
+    testrobot_msg_stack::GetCurrentModel::Response& _res)
 {
   _res.mean = this->currentVertAngleModel.mean;
   _res.min = this->currentVertAngleModel.min;
@@ -239,8 +233,8 @@ bool UnderwaterWorldROSPlugin::GetCurrentVertAngleModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateCurrentVelocityModel(
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res)
+    testrobot_msg_stack::SetCurrentModel::Request& _req,
+    testrobot_msg_stack::SetCurrentModel::Response& _res)
 {
   _res.success = this->currentVelModel.SetModel(_req.mean, _req.min, _req.max,
     _req.mu, _req.noise);
@@ -253,8 +247,8 @@ bool UnderwaterWorldROSPlugin::UpdateCurrentVelocityModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateCurrentHorzAngleModel(
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res)
+    testrobot_msg_stack::SetCurrentModel::Request& _req,
+    testrobot_msg_stack::SetCurrentModel::Response& _res)
 {
   _res.success = this->currentHorzAngleModel.SetModel(_req.mean, _req.min,
     _req.max, _req.mu, _req.noise);
@@ -267,8 +261,8 @@ bool UnderwaterWorldROSPlugin::UpdateCurrentHorzAngleModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::UpdateCurrentVertAngleModel(
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetCurrentModel::Response& _res)
+    testrobot_msg_stack::SetCurrentModel::Request& _req,
+    testrobot_msg_stack::SetCurrentModel::Response& _res)
 {
   _res.success = this->currentVertAngleModel.SetModel(_req.mean, _req.min,
     _req.max, _req.mu, _req.noise);
@@ -281,8 +275,8 @@ bool UnderwaterWorldROSPlugin::UpdateCurrentVertAngleModel(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::GetOriginSphericalCoord(
-    testrobot_world_ros_plugins_msgs::GetOriginSphericalCoord::Request& _req,
-    testrobot_world_ros_plugins_msgs::GetOriginSphericalCoord::Response& _res)
+    testrobot_msg_stack::GetOriginSphericalCoord::Request& _req,
+    testrobot_msg_stack::GetOriginSphericalCoord::Response& _res)
 {
   _res.latitude_deg =
     this->world->GetSphericalCoordinates()->LatitudeReference().Degree();
@@ -295,8 +289,8 @@ bool UnderwaterWorldROSPlugin::GetOriginSphericalCoord(
 
 /////////////////////////////////////////////////
 bool UnderwaterWorldROSPlugin::SetOriginSphericalCoord(
-    testrobot_world_ros_plugins_msgs::SetOriginSphericalCoord::Request& _req,
-    testrobot_world_ros_plugins_msgs::SetOriginSphericalCoord::Response& _res)
+    testrobot_msg_stack::SetOriginSphericalCoord::Request& _req,
+    testrobot_msg_stack::SetOriginSphericalCoord::Response& _res)
 {
   ignition::math::Angle angle;
   angle.Degree(_req.latitude_deg);
