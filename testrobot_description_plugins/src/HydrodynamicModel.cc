@@ -334,7 +334,7 @@ void HMFossen::ApplyHydrodynamicForces(
   // All additional (compared to standard rigid body) Fossen terms combined.
   Eigen::Vector6d tau = damping + added + cor;
 
-  GZ_ASSERT(!std::isnan(tau.norm()), "Hydrodynamic forces vector is nan");
+  //GZ_ASSERT(!std::isnan(tau.norm()), "Hydrodynamic forces vector is nan");
 
   if (!std::isnan(tau.norm()))
   {

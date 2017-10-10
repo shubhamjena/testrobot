@@ -5,7 +5,7 @@
 
 #include <map>
 #include <string>
-
+#include <cmath>
 #include <gazebo/gazebo.hh>
 #include <gazebo/msgs/msgs.hh>
 
