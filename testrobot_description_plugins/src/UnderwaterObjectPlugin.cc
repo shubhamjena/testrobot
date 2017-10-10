@@ -80,8 +80,8 @@ void UnderwaterObjectPlugin::Load(physics::ModelPtr _model,
   this->baseLinkName = std::string();
 
   if (_sdf->HasElement("link"))
-  { 
-    //looping till all links are found 
+  {
+    //looping till all links are found
     for (sdf::ElementPtr linkElem = _sdf->GetElement("link"); linkElem;
          linkElem = linkElem->GetNextElement("link"))
     {
@@ -91,7 +91,7 @@ void UnderwaterObjectPlugin::Load(physics::ModelPtr _model,
 	      if (linkElem->HasAttribute("name"))
 	      {
 		linkName = linkElem->Get<std::string>("name");
-		
+
                 std::size_t found = linkName.find("base_link");
 		if (found != std::string::npos)
 		{
@@ -100,7 +100,7 @@ void UnderwaterObjectPlugin::Load(physics::ModelPtr _model,
 		}
 
 		link = this->model->GetLink(linkName);
-		
+
                 if (!link)
 		{
 		  gzwarn << "Specified link [" << linkName << "] not found."
@@ -108,7 +108,7 @@ void UnderwaterObjectPlugin::Load(physics::ModelPtr _model,
 		  continue;
 		}
        	       }//end of if
-      		
+
                  else
 		 {
 	           gzwarn << "Attribute 'name' missing from link [" << linkName
@@ -116,7 +116,7 @@ void UnderwaterObjectPlugin::Load(physics::ModelPtr _model,
 	            continue;
 		 }
 
-      
+
      		// Creating a new hydrodynamic model for this link
       		HydrodynamicModelPtr hydro;
       		hydro.reset(
@@ -183,14 +183,14 @@ void UnderwaterObjectPlugin::Update(const common::UpdateInfo &_info)
     double linearAccel = link->GetRelativeLinearAccel().GetLength();
     double angularAccel = link->GetRelativeAngularAccel().GetLength();
 
-    GZ_ASSERT(!std::isnan(linearAccel) && !std::isnan(angularAccel),
-      "Linear or angular accelerations are invalid.");
-      
+    //GZ_ASSERT(!std::isnan(linearAccel) && !std::isnan(angularAccel),
+      //"Linear or angular accelerations are invalid.");
+
     hydro->ApplyHydrodynamicForces(time, this->flowVelocity);
     this->PublishRestoringForce(link);
     this->PublishHydrodynamicWrenches(link);
     this->PublishCurrentVelocityMarker();
-    this->PublishIsSubmerged();    
+    this->PublishIsSubmerged();
   }
 }
 

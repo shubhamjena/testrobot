@@ -28,7 +28,7 @@ namespace testrobot_simulator_ros
     public: UnderwaterObjectROSPlugin();
 
     /// \brief Destructor
-    public: virtual ~UnderwaterObjectROSPlugin();
+    public: ~UnderwaterObjectROSPlugin();
 
     /// \brief Load module and read parameters from SDF.
     public: void Load(gazebo::physics::ModelPtr _parent, sdf::ElementPtr _sdf);

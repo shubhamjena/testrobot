@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(testrobot_description_plugins)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -20,12 +20,11 @@ find_package(Boost REQUIRED COMPONENTS system)
 
 catkin_package(
    INCLUDE_DIRS include
-                ${Boost_INCLUDE_DIR}
                 ${CATKIN_INCLUDE_DIRS}
                 ${GAZEBO_INCLUDE_DIRS}
                 ${EIGEN3_INCLUDE_DIRS}
-  LIBRARIES underwater_Object_Plugin thrusterPlugin
-  DEPENDS gazebo
+   LIBRARIES UnderwaterObjectROSPlugin thrusterPlugin UnderwaterObjectPlugin
+   DEPENDS gazebo
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/include
@@ -36,6 +35,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include
 
 
 link_directories(${EIGEN3_LIBRARY_DIRS} ${GAZEBO_LIBRARY_DIRS})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 
 ###########
 ## Build ##
@@ -50,15 +51,13 @@ add_library(UnderwaterObjectPlugin
             src/BuoyantObject.cc
             src/UnderwaterObjectPlugin.cc 
  )           
-target_link_libraries(UnderwaterObjectPlugin 
- ${GAZEBO_libraries} 
- ${EIGEN3_LIBRARIES}
-)
+target_link_libraries(UnderwaterObjectPlugin ${GAZEBO_libraries} ${EIGEN3_LIBRARIES})
+add_dependencies(UnderwaterObjectPlugin ${catkin_EXPORTED_TARGETS})
 
-add_library(underwater_object_ros_plugin src/UnderwaterObjectROSPlugin.cc)
-target_link_libraries(underwater_object_ros_plugin ${catkin_LIBRARIES})
-add_dependencies(underwater_object_ros_plugin underwate
-  ${catkin_EXPORTED_TARGETS})
+add_library(UnderwaterObjectROSPlugin 
+            src/UnderwaterObjectROSPlugin.cc)
+target_link_libraries(UnderwaterObjectROSPlugin UnderwaterObjectPlugin ${catkin_LIBRARIES} ${GAZEBO_libraries} ${EIGEN3_LIBRARIES})
+add_dependencies(UnderwaterObjectROSPlugin UnderwaterObjectPlugin ${catkin_EXPORTED_TARGETS})
 
 #add_dependencies(Underwater_Object_Plugin ${catkin_EXPORTED_TARGETS})
 
@@ -67,7 +66,8 @@ add_dependencies(underwater_object_ros_plugin underwate
 ## Install ##
 #############
 
-install(TARGETS thrusterPlugin UnderwaterObjectPlugin underwater_object_ros_plugin  
+install(TARGETS thrusterPlugin UnderwaterObjectPlugin UnderwaterObjectROSPlugin
+	DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}  
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
